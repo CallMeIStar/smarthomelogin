@@ -1,0 +1,6 @@
+Meniu principal : 
+Telemetry Info (sensor info)
+Security Settings - On/Off
+Voice Control - GPT si Trigger Words
+Energy Info - Green Energy Monitoring / Battery Output and Consumed Power
+Luminosity Control - 

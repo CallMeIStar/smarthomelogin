@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "487547264893",
+    "project_id": "smarthomelogin-hands",
+    "storage_bucket": "smarthomelogin-hands.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:487547264893:android:5a1bc8c6ae4613618d7614",
+        "android_client_info": {
+          "package_name": "com.example.smarthomelogin"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAhmmosySvY8aEGn6o1FXP39GHdCZtgy4g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
