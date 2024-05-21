@@ -79,7 +79,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   print("Signed Out");
                   Navigator.pushReplacement(
                       context,
-                      MaterialPageRoute(builder: (context) => SignInScreen()));
+                      MaterialPageRoute(builder: (context) => LoginPage()));
                 });
               },
             ),
