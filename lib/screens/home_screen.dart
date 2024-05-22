@@ -17,6 +17,12 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
+    final buttonStyle = ElevatedButton.styleFrom(
+      backgroundColor: Color(0xFF0685AA), // Button background color
+      padding: EdgeInsets.symmetric(vertical: 16.0),
+      textStyle: TextStyle(fontSize: 16.0, color: Color(0xFFF2F8FF)), // Text color
+    );
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Smart Home Dashboard'),
@@ -24,56 +30,67 @@ class _HomeScreenState extends State<HomeScreen> {
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             ElevatedButton(
+              style: buttonStyle,
               onPressed: () {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => TelemetryInfoScreen()),
                 );
               },
-              child: Text('Telemetry Info'),
+              child: Text('Telemetry Info', style: TextStyle(color: Color(0xFFF2F8FF)),),
             ),
+            SizedBox(height: 16.0), // Space between buttons
             ElevatedButton(
+              style: buttonStyle,
               onPressed: () {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => SecuritySettingsScreen()),
                 );
               },
-              child: Text('Security Settings'),
+              child: Text('Security Settings', style: TextStyle(color: Color(0xFFF2F8FF)),),
             ),
+            SizedBox(height: 16.0),
             ElevatedButton(
+              style: buttonStyle,
               onPressed: () {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => SpeechMenu()),
                 );
               },
-              child: Text('Voice Control'),
+              child: Text('Voice Control', style: TextStyle(color: Color(0xFFF2F8FF)),),
             ),
+            SizedBox(height: 16.0),
             ElevatedButton(
+              style: buttonStyle,
               onPressed: () {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => EnergyInfoScreen()),
                 );
               },
-              child: Text('Energy Info'),
+              child: Text('Energy Info', style: TextStyle(color: Color(0xFFF2F8FF)),),
             ),
+            SizedBox(height: 16.0),
             ElevatedButton(
+              style: buttonStyle,
               onPressed: () {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => LuminosityControlScreen()),
                 );
               },
-              child: Text('Luminosity Control'),
+              child: Text('Luminosity Control', style: TextStyle(color: Color(0xFFF2F8FF)),),
             ),
             Spacer(),
             ElevatedButton(
-              child: Text("Logout"),
+              style: buttonStyle,
+              child: Text("Logout", style: TextStyle(color: Color(0xFFF2F8FF)),),
               onPressed: () {
                 FirebaseAuth.instance.signOut().then((value) {
                   print("Signed Out");

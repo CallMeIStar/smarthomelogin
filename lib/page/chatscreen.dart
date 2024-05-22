@@ -154,7 +154,7 @@ class _ChatScreenState extends State<ChatScreen> {
         gradient: LinearGradient(
           begin: Alignment.bottomRight,
           end: Alignment.topLeft,
-          colors: [Color(0xFFD4145A), Color(0xFFFBB03B)],
+          colors: [Color(0xff004952), Color(0xff49b5ee)],
         ),
       ),
       child: Scaffold(
@@ -185,14 +185,14 @@ class _ChatScreenState extends State<ChatScreen> {
               gradient: LinearGradient(
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
-                colors: [Color(0xFFFBB03B), Color.fromARGB(255, 255, 249, 221)],
+                colors: [Color(0xff49b5ee), Color.fromARGB(255,248,255,255)],
               ),
             ),
           ),
         ),
         extendBodyBehindAppBar: true,
         backgroundColor:
-            Color.fromARGB(255, 255, 249, 221), // Set background color to white
+            Color.fromARGB(255,248,255,255), // Set background color to white
         body: Column(
           children: [
             Expanded(
@@ -207,7 +207,7 @@ class _ChatScreenState extends State<ChatScreen> {
                           ? 'You: ${message.content}'
                           : 'Astrid AI: ${message.content}',
                       style: TextStyle(
-                        color: Color(0xFFD4145A),
+                        color: Color(0xff004952),
                         backgroundColor: Color.fromARGB(255, 255, 249, 221),
                       ),
                     ),
@@ -220,7 +220,7 @@ class _ChatScreenState extends State<ChatScreen> {
                 IconButton(
                   icon: Icon(_isListening ? Icons.mic : Icons.mic_off),
                   onPressed: _toggleListening,
-                  color: Color(0xFFFBB03B),
+                  color: Color(0xff49b5ee),
                 ),
                 Expanded(
                   child: Padding(
@@ -229,7 +229,7 @@ class _ChatScreenState extends State<ChatScreen> {
                       controller: _controller,
                       decoration: InputDecoration(
                         labelText: 'Type a message...',
-                        labelStyle: TextStyle(color: Color(0xFFD4145A)),
+                        labelStyle: TextStyle(color: Color(0xff004952)),
                       ),
                       onSubmitted: (message) {
                         sendMessage(message);
