@@ -12,6 +12,13 @@ dependencies:
   firebase_core: ^2.31.0
   flutter:
     sdk: flutter
+  http: ^1.2.1
+  nfc_manager: ^3.4.0
+  permission_handler: ^11.3.1
+  provider: ^6.1.2
+  shared_preferences: ^2.2.3
+  speech_to_text: ^6.6.1
+  get: ^4.6.6
 
 dev_dependencies:
   flutter_test:

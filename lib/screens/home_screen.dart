@@ -48,7 +48,7 @@ class _HomeScreenState extends State<HomeScreen> {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => VoiceControlScreen()),
+                  MaterialPageRoute(builder: (context) => SpeechMenu()),
                 );
               },
               child: Text('Voice Control'),
