@@ -15,6 +15,23 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  String? userEmail;
+
+  @override
+  void initState() {
+    super.initState();
+    fetchUserEmail();
+  }
+
+  void fetchUserEmail() {
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      setState(() {
+        userEmail = user.email;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final buttonStyle = ElevatedButton.styleFrom(
@@ -33,6 +50,13 @@ class _HomeScreenState extends State<HomeScreen> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            if (userEmail != null) ...[
+              Text(
+                'Logged in as: $userEmail',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+              SizedBox(height: 20.0),
+            ],
             ElevatedButton(
               style: buttonStyle,
               onPressed: () {

@@ -1,8 +1,15 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:nfc_manager/nfc_manager.dart';
 import 'package:nfc_manager/platform_tags.dart';
+import 'package:smarthomelogin/screens/home_screen.dart';
+import 'package:smarthomelogin/screens/signin_screen.dart';
 
 class RfidScreen extends StatefulWidget {
+  final String email;
+
+  RfidScreen({required this.email});
+
   @override
   _RfidScreenState createState() => _RfidScreenState();
 }
@@ -60,6 +67,9 @@ class _RfidScreenState extends State<RfidScreen> {
           setState(() {
             _nfcTagInfo = 'Tag Type: $tagType\nTag ID: $tagId';
           });
+
+          // Verify NFC Tag ID with Firebase
+          _verifyNfcTag(widget.email, tagId);
         } else {
           setState(() {
             _nfcTagInfo = 'Unknown tag type';
@@ -72,6 +82,34 @@ class _RfidScreenState extends State<RfidScreen> {
       setState(() {
         _nfcTagInfo = 'NFC is not available';
       });
+    }
+  }
+
+  void _verifyNfcTag(String email, String tagId) async {
+    var userSnapshot = await FirebaseFirestore.instance
+        .collection('users')
+        .where('email', isEqualTo: email)
+        .where('NFCid', isEqualTo: tagId)
+        .get();
+
+    if (userSnapshot.docs.isNotEmpty) {
+      // NFC Tag is valid
+                Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => HomeScreen()),
+          );
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Access Granted')),
+      );
+    } else {
+      // NFC Tag is invalid
+                      Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => LoginPage()),
+          );
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Access Denied - Wrong RFID')),
+      );
     }
   }
 
@@ -91,3 +129,4 @@ class _RfidScreenState extends State<RfidScreen> {
     );
   }
 }
+

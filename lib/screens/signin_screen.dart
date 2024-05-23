@@ -1,10 +1,14 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+
+import 'package:smarthomelogin/screens/admin_screen.dart';
 import 'package:smarthomelogin/screens/home_screen.dart';
 import 'package:smarthomelogin/screens/rfid_screen.dart';
 import 'package:smarthomelogin/screens/signup_screen.dart';
-
+import 'package:smarthomelogin/screens/nonvalid_screen.dart'; // Add this import
 
 class LoginPage extends StatefulWidget {
   @override
@@ -17,8 +21,10 @@ class _LoginPageState extends State<LoginPage> {
   final _formkey = GlobalKey<FormState>();
   final TextEditingController emailController = new TextEditingController();
   final TextEditingController passwordController = new TextEditingController();
+  String userEmail = '';
 
   final _auth = FirebaseAuth.instance;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,7 +32,7 @@ class _LoginPageState extends State<LoginPage> {
         child: Column(
           children: <Widget>[
             Container(
-              color: Color.fromRGBO(31,64,104,1.000),
+              color: Color.fromRGBO(31, 64, 104, 1.000),
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height,
               child: Center(
@@ -71,13 +77,13 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                           ),
                           validator: (value) {
-                            if (value!.length == 0) {
+                            if (value!.isEmpty) {
                               return "Email cannot be empty";
                             }
                             if (!RegExp(
                                     "^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+.[a-z]")
                                 .hasMatch(value)) {
-                              return ("Please enter a valid email");
+                              return "Please enter a valid email";
                             } else {
                               return null;
                             }
@@ -124,7 +130,7 @@ class _LoginPageState extends State<LoginPage> {
                               return "Password cannot be empty";
                             }
                             if (!regex.hasMatch(value)) {
-                              return ("please enter valid password min. 6 character");
+                              return "please enter valid password min. 6 characters";
                             } else {
                               return null;
                             }
@@ -134,7 +140,6 @@ class _LoginPageState extends State<LoginPage> {
                           },
                           keyboardType: TextInputType.emailAddress,
                         ),
-                       
                         SizedBox(
                           height: 20,
                         ),
@@ -148,8 +153,7 @@ class _LoginPageState extends State<LoginPage> {
                             setState(() {
                               visible = true;
                             });
-                            signIn(
-                                emailController.text, passwordController.text);
+                            signIn(emailController.text, passwordController.text);
                           },
                           child: Text(
                             "Login",
@@ -162,7 +166,7 @@ class _LoginPageState extends State<LoginPage> {
                         SizedBox(
                           height: 10,
                         ),
-                                                MaterialButton(
+                        MaterialButton(
                           shape: RoundedRectangleBorder(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(20.0))),
@@ -200,31 +204,47 @@ class _LoginPageState extends State<LoginPage> {
 
   void route() {
     User? user = FirebaseAuth.instance.currentUser;
-    var kk = FirebaseFirestore.instance
-            .collection('users')
-            .doc(user!.uid)
-            .get()
-            .then((DocumentSnapshot documentSnapshot) {
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(user!.uid)
+        .get()
+        .then((DocumentSnapshot documentSnapshot) {
       if (documentSnapshot.exists) {
-        if (documentSnapshot.get('role') == "Admin") {
-           Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) =>  HomeScreen(),
-          ),
-        );
-        }else{
+        String role = documentSnapshot.get('role');
+        if (role == "Admin") {
           Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) =>  RfidScreen(),
-          ),
-        );
+            context,
+            MaterialPageRoute(
+              builder: (context) => AdminScreen(),
+            ),
+          );
+        } else {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => RfidScreen(email: userEmail),
+            ),
+          );
         }
       } else {
         print('Document does not exist on the database');
       }
     });
+  }
+
+  Future<bool> isEmailValidated(String email) async {
+    final url = 'http://hsapi1234.azurewebsites.net/api/rfid/GetAllUsers';
+    final response = await http.get(Uri.parse(url));
+
+    if (response.statusCode == 200) {
+      List users = jsonDecode(response.body);
+      for (var user in users) {
+        if (user['email'] == email && user['isValidated'] == true) {
+          return true;
+        }
+      }
+    }
+    return false;
   }
 
   void signIn(String email, String password) async {
@@ -235,7 +255,31 @@ class _LoginPageState extends State<LoginPage> {
           email: email,
           password: password,
         );
-        route();
+        setState(() {
+          userEmail = email;
+        });
+
+        DocumentSnapshot userDoc = await FirebaseFirestore.instance
+            .collection('users')
+            .doc(userCredential.user!.uid)
+            .get();
+        String role = userDoc.get('role');
+
+        if (role == "Admin") {
+          route();
+        } else {
+          bool validated = await isEmailValidated(email);
+          if (validated) {
+            route();
+          } else {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => NonValidScreen(),
+              ),
+            );
+          }
+        }
       } on FirebaseAuthException catch (e) {
         if (e.code == 'user-not-found') {
           print('No user found for that email.');
