@@ -1,11 +1,11 @@
-class User {
+class homeuser {
   String id;
   String email;
   String uid;
   bool isValidated;
   bool isStolen;
 
-  User({
+  homeuser({
     required this.id,
     required this.email,
     required this.uid,
@@ -13,8 +13,8 @@ class User {
     required this.isStolen,
   });
 
-  factory User.fromJson(Map<String, dynamic> json) {
-    return User(
+  factory homeuser.fromJson(Map<String, dynamic> json) {
+    return homeuser(
       id: json['id'],
       email: json['email'],
       uid: json['uid'],

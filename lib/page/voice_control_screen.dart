@@ -7,6 +7,9 @@ class SpeechMenu extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        iconTheme: IconThemeData(
+          color: Colors.white, //change your color here
+        ),
         title: const Text(
           '',
           style: TextStyle(
@@ -34,11 +37,11 @@ class SpeechMenu extends StatelessWidget {
         children: [
           // Background gradient
           Container(
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.bottomRight,
-                end: Alignment.topLeft,
-                colors: [Color(0xFFD4145A), Color(0xFFFBB03B)],
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image:
+                    AssetImage("assets/image.png"), // Add your image asset here
+                fit: BoxFit.cover,
               ),
             ),
           ),
@@ -76,7 +79,10 @@ class SpeechMenu extends StatelessWidget {
     );
   }
 
-  Widget _buildMenuButton({required String text, required IconData icon, required VoidCallback onPressed}) {
+  Widget _buildMenuButton(
+      {required String text,
+      required IconData icon,
+      required VoidCallback onPressed}) {
     return GestureDetector(
       onTap: onPressed,
       child: Container(
@@ -84,7 +90,7 @@ class SpeechMenu extends StatelessWidget {
         height: 200,
         padding: const EdgeInsets.symmetric(vertical: 15),
         decoration: BoxDecoration(
-          color: const Color.fromARGB(255, 255, 249, 221),
+          color: Color.fromARGB(127, 255, 255, 255),
           borderRadius: BorderRadius.circular(30),
           boxShadow: [
             BoxShadow(
@@ -97,14 +103,16 @@ class SpeechMenu extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(icon, color: const Color(0xFFFBB03B), size: 60), // Use provided icon
+            Icon(icon,
+                color: Color.fromARGB(255, 0, 22, 4),
+                size: 60), // Use provided icon
             const SizedBox(width: 10),
             Text(
               text,
               style: const TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
-                color: Color(0xFFD4145A),
+                color: Color.fromARGB(255, 195, 255, 189),
               ),
             ),
           ],

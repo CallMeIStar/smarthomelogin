@@ -100,7 +100,7 @@ class _SpeechScreenState extends State<SpeechScreen> {
           gradient: LinearGradient(
             begin: Alignment.bottomRight,
             end: Alignment.topLeft,
-            colors: [Color(0xFFD4145A), Color(0xFFFBB03B)],
+            colors: [Color.fromARGB(255, 120, 184, 17), Color.fromARGB(255, 75, 235, 123)],
           ),
         ),
         child: Center(

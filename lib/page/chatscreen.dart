@@ -154,7 +154,7 @@ class _ChatScreenState extends State<ChatScreen> {
         gradient: LinearGradient(
           begin: Alignment.bottomRight,
           end: Alignment.topLeft,
-          colors: [Color(0xff004952), Color(0xff49b5ee)],
+          colors: [Color.fromARGB(255, 0, 82, 0), Color.fromARGB(255, 73, 238, 87)],
         ),
       ),
       child: Scaffold(
@@ -185,7 +185,7 @@ class _ChatScreenState extends State<ChatScreen> {
               gradient: LinearGradient(
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
-                colors: [Color(0xff49b5ee), Color.fromARGB(255,248,255,255)],
+                colors: [Color.fromARGB(255, 73, 238, 87), Color.fromARGB(255, 249, 255, 248)],
               ),
             ),
           ),
@@ -207,7 +207,7 @@ class _ChatScreenState extends State<ChatScreen> {
                           ? 'You: ${message.content}'
                           : 'Astrid AI: ${message.content}',
                       style: TextStyle(
-                        color: Color(0xff004952),
+                        color: Color.fromARGB(255, 0, 82, 0),
                         backgroundColor: Color.fromARGB(255, 255, 249, 221),
                       ),
                     ),
@@ -220,7 +220,7 @@ class _ChatScreenState extends State<ChatScreen> {
                 IconButton(
                   icon: Icon(_isListening ? Icons.mic : Icons.mic_off),
                   onPressed: _toggleListening,
-                  color: Color(0xff49b5ee),
+                  color: Color.fromARGB(255, 73, 238, 87),
                 ),
                 Expanded(
                   child: Padding(
@@ -229,7 +229,7 @@ class _ChatScreenState extends State<ChatScreen> {
                       controller: _controller,
                       decoration: InputDecoration(
                         labelText: 'Type a message...',
-                        labelStyle: TextStyle(color: Color(0xff004952)),
+                        labelStyle: TextStyle(color: Color.fromARGB(255, 0, 82, 0)),
                       ),
                       onSubmitted: (message) {
                         sendMessage(message);

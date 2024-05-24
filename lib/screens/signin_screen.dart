@@ -8,7 +8,9 @@ import 'package:smarthomelogin/screens/admin_screen.dart';
 import 'package:smarthomelogin/screens/home_screen.dart';
 import 'package:smarthomelogin/screens/rfid_screen.dart';
 import 'package:smarthomelogin/screens/signup_screen.dart';
-import 'package:smarthomelogin/screens/nonvalid_screen.dart'; // Add this import
+import 'package:smarthomelogin/screens/nonvalid_screen.dart';
+
+import 'admin_dashboard.dart'; // Add this import
 
 class LoginPage extends StatefulWidget {
   @override
@@ -32,7 +34,13 @@ class _LoginPageState extends State<LoginPage> {
         child: Column(
           children: <Widget>[
             Container(
-              color: Color.fromRGBO(31, 64, 104, 1.000),
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage(
+                      "assets/image.png"), // Add your image asset here
+                  fit: BoxFit.cover,
+                ),
+              ),
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height,
               child: Center(
@@ -62,17 +70,21 @@ class _LoginPageState extends State<LoginPage> {
                           controller: emailController,
                           decoration: InputDecoration(
                             filled: true,
-                            fillColor: Colors.white,
+                            fillColor: Color.fromARGB(127, 255, 255, 255),
                             hintText: 'Email',
                             enabled: true,
                             contentPadding: const EdgeInsets.only(
                                 left: 14.0, bottom: 8.0, top: 8.0),
                             focusedBorder: OutlineInputBorder(
-                              borderSide: new BorderSide(color: Colors.white),
+                              borderSide: new BorderSide(
+                                  color:
+                                      const Color.fromARGB(0, 255, 255, 255)),
                               borderRadius: new BorderRadius.circular(10),
                             ),
                             enabledBorder: UnderlineInputBorder(
-                              borderSide: new BorderSide(color: Colors.white),
+                              borderSide: new BorderSide(
+                                  color:
+                                      const Color.fromARGB(0, 255, 255, 255)),
                               borderRadius: new BorderRadius.circular(10),
                             ),
                           ),
@@ -110,17 +122,21 @@ class _LoginPageState extends State<LoginPage> {
                                   });
                                 }),
                             filled: true,
-                            fillColor: Colors.white,
+                            fillColor: Color.fromARGB(127, 255, 255, 255),
                             hintText: 'Password',
                             enabled: true,
                             contentPadding: const EdgeInsets.only(
                                 left: 14.0, bottom: 8.0, top: 15.0),
                             focusedBorder: OutlineInputBorder(
-                              borderSide: new BorderSide(color: Colors.white),
+                              borderSide: new BorderSide(
+                                  color:
+                                      const Color.fromARGB(0, 255, 255, 255)),
                               borderRadius: new BorderRadius.circular(10),
                             ),
                             enabledBorder: UnderlineInputBorder(
-                              borderSide: new BorderSide(color: Colors.white),
+                              borderSide: new BorderSide(
+                                  color:
+                                      const Color.fromARGB(0, 255, 255, 255)),
                               borderRadius: new BorderRadius.circular(10),
                             ),
                           ),
@@ -153,7 +169,8 @@ class _LoginPageState extends State<LoginPage> {
                             setState(() {
                               visible = true;
                             });
-                            signIn(emailController.text, passwordController.text);
+                            signIn(
+                                emailController.text, passwordController.text);
                           },
                           child: Text(
                             "Login",
@@ -161,7 +178,8 @@ class _LoginPageState extends State<LoginPage> {
                               fontSize: 20,
                             ),
                           ),
-                          color: Colors.white,
+                          color: Colors.white
+                              .withOpacity(0.5), // Adjust opacity here
                         ),
                         SizedBox(
                           height: 10,
@@ -185,7 +203,8 @@ class _LoginPageState extends State<LoginPage> {
                               fontSize: 20,
                             ),
                           ),
-                          color: Colors.white,
+                          color: Colors.white
+                              .withOpacity(0.5), // Adjust opacity here
                         ),
                         SizedBox(
                           height: 10,
@@ -215,7 +234,7 @@ class _LoginPageState extends State<LoginPage> {
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(
-              builder: (context) => AdminScreen(),
+              builder: (context) => MainScreen(),
             ),
           );
         } else {
